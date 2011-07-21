@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sinatra'
 require 'sequel'
+require 'maruku'
+require 'syntax'
 
 configure do
   # DATABASE_URL contain db information for Heroku deployment.
@@ -8,13 +10,13 @@ configure do
 
 	require 'ostruct'
 	Blog = OpenStruct.new(
-	:title                 => "Small coding",
-	:author                => "Antoine Qu'hen",
-	:url_base              => 'http://localhost:4567/',
-	:admin_password        => 'admin',
-	:admin_cookie_key      => 'scanty_admin',
-	:admin_cookie_value    => '51d6d976913ace58',
-	:disqus_shortname      => 'small123'
+    :title                 => "Small coding",
+    :author                => "Antoine Qu'hen",
+    :url_base              => 'http://localhost:4567/',
+    :admin_password        => ENV['SMALL123_PASSWORD'] || 'password',
+    :admin_cookie_key      => 'www.small123.com',
+    :admin_cookie_value    => ENV['SMALL123_COOKIE_VALUE'] || '51d6d862413ace58',
+    :disqus_shortname      => 'small123'
 	)
 end
 
@@ -29,6 +31,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
 require 'post'
 
 helpers do
+
 	def admin?
 		request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
 	end
@@ -40,6 +43,7 @@ helpers do
   def link_to text, url
     "<a href=\"#{url}\">#{text}</a>"
   end
+
 end
 
 layout 'layout'
@@ -48,6 +52,7 @@ layout 'layout'
 
 get '/' do
 	posts = Post.reverse_order(:created_at).limit(10)
+  @big_title = true
 	haml :index, :locals => { :posts => posts }
 end
 

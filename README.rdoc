@@ -39,6 +39,13 @@ In production, you'll probably want to run "rake start" to start (and restart)
 the server.  Change the value of "port" at the top of the Rakefile to run on a
 different port.
 
+== Deployment on Heroku
+
+Set via heroku cli the application credientials:
+
+  heroku config:add SMALL123_PASSWORD='password' --app myappstaging
+  heroku config:add SMALL123_COOKIE_VALUE='123456789' --app myappstaging
+
 == Database
 
 The default is a SQLite file named blog.db.  To use something else, set
