@@ -4,14 +4,15 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
 class Post < Sequel::Model
-	unless table_exists?
+
+	unless @db.table_exists?('posts')
 		set_schema do
 			primary_key :id
-			text :title
-			text :body
-			text :slug
-			text :tags
-			timestamp :created_at
+			text        :title
+			text        :body
+			text        :slug
+			text        :tags
+			timestamp   :created_at
 		end
 		create_table
 	end
@@ -92,4 +93,5 @@ class Post < Sequel::Model
 		end
 		[ to_html(show.join("\n\n")), hide.size > 0 ]
 	end
+
 end

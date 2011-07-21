@@ -1,2 +1,5 @@
 *.log
 blog.db
+.rvmrc
+*.swp
+*.swo
