@@ -1,0 +1,16 @@
+%h1= "Posts tagged #{tag}"
+- posts.each do |post|
+	.post
+		%p.date
+			= post[:created_at].strftime("%b")
+			%b= post[:created_at].strftime("%d")
+		%h2= link_to post[:title], post.url
+		%p.meta
+			%small
+				= "#{post.linked_tags}"
+				|
+				= link_to 'comments', "#{post.url}#disqus_thread"
+		.entry
+			= post.summary_html
+			- if post.more?
+				= link_to 'Continue reading &raquo;', post.url

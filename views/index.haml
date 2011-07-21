@@ -1,0 +1,39 @@
+- posts.each do |post|
+  .post
+    %p.date
+      = post[:created_at].strftime("%b")
+      %b= post[:created_at].strftime("%d")
+    %h2.title= link_to post[:title], post.url
+    %p.meta
+      %small
+        = post.linked_tags
+        - if Blog.disqus_shortname
+          |
+          = link_to 'comments', post.url
+    .entry
+      = post.summary_html
+      - if post.more?
+        = link_to 'Continue reading &raquo;', post.url 
+
+- if posts.empty?
+  %h2
+    %p Looks like this is a fresh install of Scanty.
+    %p= "#{link_to('log in', "/auth")}, then #{link_to('create a post', "/posts/new")}."
+-else
+  #older_posts= link_to "Archive", "/past"
+
+- if admin?
+  #new_post= link_to "New post", "/posts/new"
+
+- if Blog.disqus_shortname
+  :javascript
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+        }
+      }
+      document.write('<script type="text/javascript" src="http://disqus.com/forums/<%= Blog.disqus_shortname %>/get_num_replies.js' + query + '"></' + 'script>');
+      })();

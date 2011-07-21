@@ -14,7 +14,7 @@ configure do
 	:admin_password        => 'admin',
 	:admin_cookie_key      => 'scanty_admin',
 	:admin_cookie_value    => '51d6d976913ace58',
-	:disqus_shortname      => nil
+	:disqus_shortname      => 'small123'
 	)
 end
 
@@ -36,6 +36,10 @@ helpers do
 	def auth
 		halt [ 401, 'Not authorized' ] unless admin?
 	end
+
+  def link_to text, url
+    "<a href=\"#{url}\">#{text}</a>"
+  end
 end
 
 layout 'layout'
@@ -44,14 +48,14 @@ layout 'layout'
 
 get '/' do
 	posts = Post.reverse_order(:created_at).limit(10)
-	erb :index, :locals => { :posts => posts }, :layout => false
+	haml :index, :locals => { :posts => posts }
 end
 
 get '/past/:year/:month/:day/:slug/' do
 	post = Post.filter(:slug => params[:slug]).first
 	halt [ 404, "Page not found" ] unless post
 	@title = post.title
-	erb :post, :locals => { :post => post }
+	haml :post, :locals => { :post => post }
 end
 
 get '/past/:year/:month/:day/:slug' do
@@ -61,14 +65,14 @@ end
 get '/past' do
 	posts = Post.reverse_order(:created_at)
 	@title = "Archive"
-	erb :archive, :locals => { :posts => posts }
+	haml :archive, :locals => { :posts => posts }
 end
 
 get '/past/tags/:tag' do
 	tag = params[:tag]
 	posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
 	@title = "Posts tagged #{tag}"
-	erb :tagged, :locals => { :posts => posts, :tag => tag }
+	haml :tagged, :locals => { :posts => posts, :tag => tag }
 end
 
 get '/feed' do
@@ -90,7 +94,7 @@ end
 ### Admin
 
 get '/auth' do
-	erb :auth
+	haml :auth
 end
 
 post '/auth' do
@@ -102,7 +106,7 @@ end
 
 get '/posts/new' do
 	auth
-	erb :edit, :locals => { :post => Post.new, :url => '/posts' }
+	haml :edit, :locals => { :post => Post.new, :url => '/posts' }
 end
 
 post '/posts' do
@@ -116,7 +120,7 @@ get '/past/:year/:month/:day/:slug/edit' do
 	auth
 	post = Post.filter(:slug => params[:slug]).first
 	halt [ 404, "Page not found" ] unless post
-	erb :edit, :locals => { :post => post, :url => post.url }
+	haml :edit, :locals => { :post => post, :url => post.url }
 end
 
 post '/past/:year/:month/:day/:slug/' do
