@@ -3,6 +3,7 @@ require 'syntax/convertors/html'
 class Post < Sequel::Model
 
 	unless @db.table_exists?('posts')
+    Sequel::Model.plugin(:schema)
 		set_schema do
 			primary_key :id
 			text        :title
