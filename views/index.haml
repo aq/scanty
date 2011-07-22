@@ -1,4 +1,4 @@
-- posts.each do |post|
+- @posts.each do |post|
   .post
     %p.date
       = post[:created_at].strftime("%b")
@@ -15,7 +15,7 @@
       - if post.more?
         = link_to 'Continue reading &raquo;', post.url 
 
-- if posts.empty?
+- if @posts.empty?
   %h2
     %p Looks like this is a fresh install of Scanty.
     %p= "#{link_to('log in', "/auth")}, then #{link_to('create a post', "/posts/new")}."

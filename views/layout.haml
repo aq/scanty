@@ -2,9 +2,12 @@
 %html
 %head
   %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+  - keywords = (@post && !@post.tags.nil?) ? @post.tags.strip.gsub(' ',', ') : 'ruby programmer, ruby on rails, freelance rubyist, ruby hacker, ruby sinatra, ruby conference'
+  %meta{:name => 'keywords', :content => keywords} 
   %title= @title || Blog.title
-  %link{:href => '/stylesheet/style.css', :rel => 'stylesheet', :type => 'text/css'}
   %link{:href => "/feed", :rel => "alternate", :title => "Primary Feed", :type => "application/atom+xml"}
+  %link{:href => 'http://fonts.googleapis.com/css?family=Monofett&v2', :rel => 'stylesheet', :type => 'text/css'}
+  %link{:href => '/stylesheet/style.css', :rel => 'stylesheet', :type => 'text/css'}
 %body
   #header
   %div{:id => (@big_title ? 'logo' : 'logo2')}
@@ -12,4 +15,4 @@
     %p= "by #{Blog.author}"
   #content= yield
   #footer
-    #legal= "Content and design by #{Blog.author}"
+    #legal= "Content by #{Blog.author}"

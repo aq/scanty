@@ -6,7 +6,8 @@ body {
 	margin: 0px;
 	padding: 0px;
 	background: #3A3A3A;
-	font-family: Arial, Helvetica, sans-serif;
+	/* font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Monofett', cursive;
 	font-size: 13px;
 	color: #000000;
 }
@@ -101,6 +102,7 @@ hr {
 	margin: 0px;
 	padding: 10px 0px 0px 0px;
 	font-size: 36px;
+  font-family: 'Monofett', cursive;
 }
 
 #logo p {

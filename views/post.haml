@@ -1,11 +1,11 @@
 .postzoom
-  %h2.title= post.title
+  %h2.title= @post.title
   %p.meta
-    %small= post.linked_tags
-  %p.meta= post.created_at
-  .entry= post.body_html
+    %small= @post.linked_tags
+  %p.meta= @post.created_at
+  .entry= @post.body_html
   - if admin?
-    .edit= link_to 'edit', "#{post.url}edit"
+    .edit= link_to 'edit', "#{@post.url}edit"
 
 - if Blog.disqus_shortname
   #disqus_thread

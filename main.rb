@@ -50,16 +50,16 @@ layout 'layout'
 ### Public
 
 get '/' do
-	posts = Post.reverse_order(:created_at).limit(10)
+	@posts = Post.reverse_order(:created_at).limit(10)
   @big_title = true
-	haml :index, :locals => { :posts => posts }
+	haml :index
 end
 
 get '/past/:year/:month/:day/:slug/' do
-	post = Post.filter(:slug => params[:slug]).first
-	halt [ 404, "Page not found" ] unless post
-	@title = post.title
-	haml :post, :locals => { :post => post }
+	@post = Post.filter(:slug => params[:slug]).first
+	halt [ 404, "Page not found" ] unless @post
+	@title = @post.title
+	haml :post
 end
 
 get '/past/:year/:month/:day/:slug' do
@@ -67,16 +67,17 @@ get '/past/:year/:month/:day/:slug' do
 end
 
 get '/past' do
-	posts = Post.reverse_order(:created_at)
+	@posts = Post.reverse_order(:created_at)
 	@title = "Archive"
-	haml :archive, :locals => { :posts => posts }
+	haml :archive
 end
 
 get '/past/tags/:tag' do
-	tag = params[:tag]
-	posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
-	@title = "Posts tagged #{tag}"
-	haml :tagged, :locals => { :posts => posts, :tag => tag }
+	@tag = params[:tag]
+	@posts = Post.filter(:tags.like("%#{@tag}%")).
+    reverse_order(:created_at).limit(30)
+	@title = "Posts tagged #{@tag}"
+	haml :tagged
 end
 
 get '/feed' do

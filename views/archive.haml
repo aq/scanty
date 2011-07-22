@@ -1,6 +1,6 @@
 %h1 Archive
 %table.archive
-  - posts.each do |post|
+  - @posts.each do |post|
     %tr
       %td.date= post.created_at.strftime("%b %d %Y")
       %td.title= link_to post.title, post.url
