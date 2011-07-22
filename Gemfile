@@ -1,4 +1,4 @@
-source :gemcutter
+source 'http://rubygems.org'
 
 gem 'sinatra', '1.2.6'
 gem 'sqlite3', '1.3.3'
