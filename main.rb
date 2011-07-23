@@ -39,8 +39,12 @@ helpers do
 		halt [ 401, 'Not authorized' ] unless admin?
 	end
 
-  def link_to text, url
-    "<a href=\"#{url}\">#{text}</a>"
+  def link_to text, url, title=nil
+    "<a href=\"#{url}\" #{title.nil? ? nil : "title=\"#{title}\""}>#{text}</a>"
+  end
+
+  def image_tag image_name, rel=nil
+    "<img src=\"#{image_name.include?('http') ? nil : '/images/'}#{image_name}\"#{rel ? " alt=\"#{rel}\"" : nil} />"
   end
 
 end

@@ -1,39 +1,41 @@
-- @posts.each do |post|
-  .post
-    %p.date
-      = post[:created_at].strftime("%b")
-      %b= post[:created_at].strftime("%d")
-    %h2.title= link_to post[:title], post.url
-    %p.meta
-      %small
-        = post.linked_tags
-        - if Blog.disqus_shortname
-          |
-          = link_to 'comments', post.url
-    .entry
-      = post.summary_html
-      - if post.more?
-        = link_to 'Continue reading &raquo;', post.url 
-
 - if @posts.empty?
   %h2
     %p Looks like this is a fresh install of Scanty.
     %p= "#{link_to('log in', "/auth")}, then #{link_to('create a post', "/posts/new")}."
--else
-  #older_posts= link_to "Archive", "/past"
 
 - if admin?
   #new_post= link_to "New post", "/posts/new"
 
-- if Blog.disqus_shortname
-  :javascript
-    (function() {
-      var links = document.getElementsByTagName('a');
-      var query = '?';
-      for(var i = 0; i < links.length; i++) {
-        if(links[i].href.indexOf('#disqus_thread') >= 0) {
-          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-        }
-      }
-      document.write('<script type="text/javascript" src="http://disqus.com/forums/<%= Blog.disqus_shortname %>/get_num_replies.js' + query + '"></' + 'script>');
-      })();
+#column-right
+
+  #profile
+    %span.portrait= image_tag 'http://gravatar.com/avatar/c31a7c0145e8694e2953d7522f99ea01'
+    I am a father, a hobbyist Chinese learner and I spend good time doing programming especially with Ruby. I have worked in France and in China. Now I am using ruby to make the people play along their favorite quizzes on TV.
+
+  %ul#links
+    %li= link_to image_tag('google_plus.png'), "https://plus.google.com/112814231320164237502", "Let's get in touch"
+    %li= link_to image_tag('linkedin.png'), "http://fr.linkedin.com/in/antoinequhen", "my CV on LinkedIn"
+    %li= link_to image_tag('github.png'), "http://github.com/aq","fork me on Github"
+    %li#skillstar= link_to image_tag('skillstar-log-company-using-ruby.png'), "http://www.skillstar.com/", 'I am currently working as a ruby programmer for the Skillstar project.'
+
+  #twitter= haml :twitter
+
+#column-left
+
+  #blog-posts-list
+    - @posts.each do |post|
+      .post
+        %p.date= post[:created_at].strftime("%b <b>%d</b>")
+        %h2.title= link_to post[:title], post.url
+        %p.meta
+          %small
+            = post.linked_tags
+    #rss-link= link_to image_tag('feed-of-ruby-programming-blog-posts.png',"The feed of my blog posts about ruby programming and conferences."), "/feed"
+    - unless @posts.empty?
+      #older_posts= link_to "Archive", "/past"
+
+  %ul#picasa-ruby-feed
+    %li= link_to image_tag('picasa.png'), "https://plus.google.com/photos/112814231320164237502/albums/profile", 'See my pictures on Picasa'
+  %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
+  %script{:type => "text/javascript", :src => "/javascripts/picasa_album_feed_widget.js"}
+

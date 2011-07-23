@@ -290,3 +290,68 @@ form[name=edit] textarea {
 	width: 50em;
 	height: 25em;
 }
+
+/* My crap, to refactor */
+
+#column-left{
+  width: 32.5em;
+  float: left;
+}
+
+#column-right{
+  width: 17em;
+  float: right
+}
+
+#profile .portrait{
+  float: left;
+  display: block;
+  border: 1px solid #C8C7BA;
+  padding: 4px;
+  background-color: white;
+  margin-right: 12px;
+  margin-bottom: 10px;
+}
+
+#profile img {
+  border: 1px solid #555653;
+  display: block;
+}
+
+ul#links{
+  border-radius: 20px 10px;
+  display: block;
+  list-style-type: none;
+  background: #131f14;
+}
+
+ul#links li {
+  display: inline-block;
+  margin-left: 1px;
+}
+
+#blog-posts-list{
+  margin-bottom:20px;
+}
+
+#older_posts {
+  margin-left:30px;
+}
+
+#rss-link {
+  float:left;
+}
+
+ul#picasa-ruby-feed{
+  border-radius: 20px 10px;
+  display: block;
+  list-style-type: none;
+  background: #131f14;
+  padding: 0;
+}
+
+ul#picasa-ruby-feed li {
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 10px;
+}
